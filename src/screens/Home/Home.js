@@ -1,17 +1,59 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Image } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class Home extends Component {
     render() {
         return (
-            <View style={styles.container}>
-                <Text> Home </Text>
-            </View>
+            <>
+                <Image source={require('../../assets/undraw_walk_in_the_city_1ma6.png')} style={styles.backgroundTopRight} />
+                <View style={styles.container}>
+                    <Text style={styles.txtScore}>
+                        Score
+                </Text>
+                    <Text style={styles.txtNumber}>0</Text>
+                    <TouchableOpacity>
+                        <Image source={require('../../assets/button-play.png')} style={styles.btnPlay} />
+                    </TouchableOpacity>
+                </View>
+                <Image source={require('../../assets/undraw_compose_music_ovo2.png')} style={styles.backgroundBottomLeft} />
+            </>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    backgroundTopRight: {
+        position: 'absolute',
+        width: 200,
+        height: 150,
+        top: 10,
+        alignSelf: 'flex-end'
+    },
+    backgroundBottomLeft: {
+        width: 200,
+        height: 180,
+        marginRight: 'auto'
+    },
+    txtScore: {
+        fontFamily: 'Comic Sans MS',
+        fontSize: 50,
+        color: '#3F51B5',
+        fontWeight: 'bold',
+        marginBottom: 20,
+        marginTop: 150
+    },
+    txtNumber: {
+        fontFamily: 'Comic Sans MS',
+        fontSize: 40,
+        color: '#3F51B5',
+        fontWeight: 'bold',
+        marginBottom: 20
+    },
+    btnPlay: {
+        width: 200,
+        height: 80
+    },
     container: {
         flex: 1,
         margin: 0,
