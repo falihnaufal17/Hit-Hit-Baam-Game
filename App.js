@@ -1,23 +1,33 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, Image } from 'react-native'
+import { View } from 'react-native'
+
+import Splash from './src/screens/splash/Splash'
+import MainNavigation from './src/publics/navigations/MainNavigation'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      view: <Splash />
+    }
+  }
+
+  componentWillMount() {
+    setTimeout(() => {
+      this.setState({
+        view: <MainNavigation />
+      })
+    }, 2000)
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <Image source={require('./src/assets/logo-hithitbaam/logo.png')} />
-      </View>
+      <>
+        {this.state.view}
+      </>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    margin: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-})
 
 export default App
