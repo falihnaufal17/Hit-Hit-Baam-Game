@@ -36,7 +36,12 @@ const StackNavigation = createStackNavigator({
             header: null
         }
     },
-    LeaderBoards
+    LeaderBoards: {
+        screen: LeaderBoards,
+        navigationOptions: {
+            title: "Leaderboards"
+        }
+    }
 }, {
         initialRouteName: 'Home'
     })

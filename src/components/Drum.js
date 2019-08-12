@@ -1,20 +1,66 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import Sound from "react-native-sound";
 
 class Drum extends Component {
+    snare1() {
+        const requireAudio = require('../assets/sounds/HiHat(9).wav');
+        const s = new Sound(requireAudio, (e) => {
+            if (e) {
+                console.log('Error in SOUND', e);
+                return;
+            }
+            s.play(() => s.release());
+        });
+    }
+
+    snare2() {
+        const requireAudio = require('../assets/sounds/Snare(2).wav');
+        const s = new Sound(requireAudio, (e) => {
+            if (e) {
+                console.log('Error in SOUND', e);
+                return;
+            }
+            s.play(() => s.release());
+        });
+    }
+
+    kick1() {
+        const requireAudio = require('../assets/sounds/Kick(1).wav');
+        const s = new Sound(requireAudio, (e) => {
+            if (e) {
+                console.log('Error in SOUND', e);
+                return;
+            }
+            s.play(() => s.release());
+        });
+    }
+
+    kick2() {
+        const requireAudio = require('../assets/sounds/Kick(2).wav');
+        const s = new Sound(requireAudio, (e) => {
+            if (e) {
+                console.log('Error in SOUND', e);
+                return;
+            }
+            s.play(() => s.release());
+        });
+    }
+
     render() {
+
         return (
             <View style={styles.container}>
                 <View style={{ top: '5%' }}>
                     <View
                         style={{ flexDirection: 'row', justifyContent: 'space-around', marginHorizontal: 50 }}>
-                        <SmallDrum />
-                        <SmallDrum />
+                        <SmallDrum sound={this.snare1.bind(this)} />
+                        <SmallDrum sound={this.snare2.bind(this)} />
                     </View>
                     <View
                         style={{ flexDirection: 'row', justifyContent: 'space-evenly', bottom: '15%' }}>
-                        <BigDrum />
-                        <BigDrum />
+                        <BigDrum sound={this.kick1.bind(this)} />
+                        <BigDrum sound={this.kick2.bind(this)} />
                     </View>
                 </View>
             </View>
@@ -31,6 +77,7 @@ class BigDrum extends Component {
                 activeOpacity={0.9}
                 colo
                 style={styles.bigDrum}
+                onPress={this.props.sound}
             >
                 <View style={styles.bigDrumOutter}>
                     <View style={styles.bigDrumInner} />
@@ -45,7 +92,9 @@ class SmallDrum extends Component {
         return (
             <TouchableOpacity
                 activeOpacity={0.9}
-                style={styles.smallDrum}>
+                style={styles.smallDrum}
+                onPress={this.props.sound}
+            >
                 <View style={styles.smallDrumOutter}>
                     <View style={styles.smallDrumInner} />
                 </View>

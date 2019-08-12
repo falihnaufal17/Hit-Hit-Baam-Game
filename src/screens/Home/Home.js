@@ -12,7 +12,9 @@ class Home extends Component {
                         Score
                 </Text>
                     <Text style={styles.txtNumber}>0</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('Main')}
+                    >
                         <Image source={require('../../assets/button-play.png')} style={styles.btnPlay} />
                     </TouchableOpacity>
                 </View>
