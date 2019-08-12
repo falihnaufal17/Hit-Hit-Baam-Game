@@ -24,7 +24,12 @@ const StackNavigation = createStackNavigator({
             header: null
         }
     },
-    Register,
+    Register: {
+        screen: Register,
+        navigationOptions: {
+            header: null
+        }
+    },
     Main: {
         screen: Main,
         navigationOptions: {
@@ -33,7 +38,7 @@ const StackNavigation = createStackNavigator({
     },
     LeaderBoards
 }, {
-        initialRouteName: 'Login'
+        initialRouteName: 'Home'
     })
 
 const MainNavigation = createDrawerNavigator({
