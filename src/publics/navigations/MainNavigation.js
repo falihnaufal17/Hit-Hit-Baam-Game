@@ -28,7 +28,7 @@ const StackNavigation = createStackNavigator({
     },
     LeaderBoards
 }, {
-        initialRouteName: 'Main'
+        initialRouteName: 'Home'
     })
 
 const MainNavigation = createDrawerNavigator({
