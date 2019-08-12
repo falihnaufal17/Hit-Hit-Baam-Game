@@ -1,4 +1,4 @@
-import { createAppContainer, createDrawerNavigator, createStackNavigator, HeaderBackButton } from 'react-navigation'
+import { createAppContainer, createDrawerNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation'
 import React, { Components } from 'react'
 
 import Home from '../../screens/Home/Home'
@@ -9,6 +9,16 @@ import Main from '../../screens/Main/Main'
 import SideBar from '../../components/SideBar';
 import Avatar from '../../components/Avatar';
 import IconLeaderBoards from '../../components/IconLeaderBoards';
+import AuthLoading from '../../components/AuthLoading';
+
+const AuthStack = createStackNavigator({
+    Login: {
+        screen: Login,
+        navigationOptions: {
+            header: null
+        }
+    }
+})
 
 const StackNavigation = createStackNavigator({
     Home: {
@@ -18,14 +28,14 @@ const StackNavigation = createStackNavigator({
             headerRight: (<IconLeaderBoards />),
         }
     },
-    Login: {
-        screen: Login,
+    Register: {
+        screen: Register,
         navigationOptions: {
             header: null
         }
     },
-    Register: {
-        screen: Register,
+    Login: {
+        screen: Login,
         navigationOptions: {
             header: null
         }
@@ -58,4 +68,10 @@ const MainNavigation = createDrawerNavigator({
         },
     })
 
-export default createAppContainer(MainNavigation)
+export default createAppContainer(createSwitchNavigator(
+    {
+        AuthLoading: AuthLoading,
+        App: MainNavigation,
+        Auth: AuthStack
+    }
+))

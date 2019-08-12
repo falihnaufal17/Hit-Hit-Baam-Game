@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, AsyncStorage as storage } from 'react-native'
 import { View, Thumbnail } from 'native-base'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { withNavigation } from 'react-navigation'
@@ -7,6 +7,27 @@ import { withNavigation } from 'react-navigation'
 class Avatar extends Component {
     constructor(props) {
         super(props)
+
+        this.state = {
+            image: '',
+            token: ''
+        }
+
+        storage.getItem('image', (err, result) => {
+            if (result) {
+                this.setState({
+                    image: result
+                })
+            }
+        })
+
+        storage.getItem('token', (err, result) => {
+            if (result) {
+                this.setState({
+                    token: result
+                })
+            }
+        })
     }
 
     render() {
@@ -15,7 +36,13 @@ class Avatar extends Component {
                 <TouchableOpacity onPress={() => {
                     this.props.navigation.openDrawer()
                 }}>
-                    <Thumbnail small rounded source={require('../assets/image_20170412_112801_50-264x300.jpg')} style={styles.avatar} />
+                    {
+                        this.state.token
+                            ?
+                            <Thumbnail small rounded source={{ uri: this.state.image }} style={styles.avatar} />
+                            :
+                            <Thumbnail small rounded source={require('../assets/Apps-Google-Play-Games-icon.png')} style={styles.avatar} />
+                    }
                 </TouchableOpacity>
             </View>
         )

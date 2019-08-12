@@ -1,8 +1,41 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, FlatList } from 'react-native'
+import { Text, View, StyleSheet, FlatList, AsyncStorage as storage } from 'react-native'
 import { Thumbnail } from 'native-base'
 
 class LeaderBoards extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            fullname: '',
+            image: '',
+            token: ''
+        }
+
+        storage.getItem('image', (err, result) => {
+            if (result) {
+                this.setState({
+                    image: result
+                })
+            }
+        })
+
+        storage.getItem('fullname', (err, result) => {
+            if (result) {
+                this.setState({
+                    fullname: result
+                })
+            }
+        })
+
+        storage.getItem('token', (err, result) => {
+            if (result) {
+                this.setState({
+                    token: result
+                })
+            }
+        })
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -12,14 +45,25 @@ class LeaderBoards extends Component {
                         <Text style={styles.txtStyle}>100</Text>
                     </View>
                     <View style={styles.avatarCenter}>
-                        <Thumbnail large rounded source={require('../../assets/image_20170412_112801_50-264x300.jpg')} />
+                        {this.state.token
+                            ?
+                            <Thumbnail large rounded source={{ uri: this.state.image }} />
+                            :
+                            <Thumbnail large rounded source={require('../../assets/Apps-Google-Play-Games-icon.png')} />
+                        }
                     </View>
                     <View style={styles.rightText}>
                         <Text style={styles.txtStyle}>Score</Text>
                         <Text style={styles.txtStyle}>10000</Text>
                     </View>
                     <View style={styles.footerName}>
-                        <Text style={styles.txtfooterName}>Jill Valentine</Text>
+                        {
+                            this.state.token
+                                ?
+                                <Text style={styles.txtfooterName}>{this.state.fullname}</Text>
+                                :
+                                <Text style={styles.txtfooterName}>You not logged in!</Text>
+                        }
                     </View>
                 </View>
                 <View style={styles.leaderBoardsList}>
@@ -44,7 +88,8 @@ const styles = StyleSheet.create({
     txtfooterName: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: 'white'
+        color: 'white',
+        textTransform: 'capitalize'
     },
     footerName: {
         flex: 1,
