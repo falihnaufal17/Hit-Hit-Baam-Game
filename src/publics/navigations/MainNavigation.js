@@ -18,7 +18,12 @@ const StackNavigation = createStackNavigator({
             headerRight: (<IconLeaderBoards />),
         }
     },
-    Login,
+    Login: {
+        screen: Login,
+        navigationOptions: {
+            header: null
+        }
+    },
     Register,
     Main: {
         screen: Main,
@@ -28,7 +33,7 @@ const StackNavigation = createStackNavigator({
     },
     LeaderBoards
 }, {
-        initialRouteName: 'Home'
+        initialRouteName: 'Login'
     })
 
 const MainNavigation = createDrawerNavigator({
