@@ -26,6 +26,7 @@ class Home extends Component {
 
 const styles = StyleSheet.create({
     backgroundTopRight: {
+        opacity: 0.5,
         position: 'absolute',
         width: 200,
         height: 150,
@@ -33,6 +34,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end'
     },
     backgroundBottomLeft: {
+        opacity: 0.5,
         width: 200,
         height: 180,
         marginRight: 'auto'
