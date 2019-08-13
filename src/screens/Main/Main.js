@@ -16,6 +16,49 @@ class Main extends Component {
         }
     }
 
+    kick1 = async () => {
+        const requireAudio = require('../../assets/sounds/Kick(2).wav');
+        const s = new Sound(requireAudio, (e) => {
+            if (e) {
+                console.log('Error in SOUND', e);
+                return;
+            }
+            s.play(() => {
+                s.release()
+                s.setVolume(1.0)
+            });
+        });
+
+        await this.setState({
+            button: 1
+        })
+
+        if (this.state.pattern[this.state.isNow] === this.state.button) {
+            if (this.state.pattern.length === this.state.isNow + 1) {
+                await this.setState({
+                    combo: this.state.combo - 1,
+                    isNow: 0
+                })
+            }
+
+            await this.setState({
+                score: this.state.score + 2,
+                isNow: this.state.isNow + 1
+            })
+        } else {
+            await this.setState({
+                score: 0,
+                hasil: 0,
+                isNow: 0,
+                combo: 5
+            })
+        }
+
+        await this.setState({
+            button: this.state.pattern[this.state.isNow]
+        })
+    }
+
     snare1 = async () => {
         await this.setState({
             button: 2
@@ -36,7 +79,8 @@ class Main extends Component {
         if (this.state.pattern[this.state.isNow] === this.state.button) {
             if (this.state.pattern.length === this.state.isNow + 1) {
                 await this.setState({
-                    combo: this.state.combo - 1
+                    combo: this.state.combo - 1,
+                    isNow: 0
                 })
             }
 
@@ -52,6 +96,10 @@ class Main extends Component {
                 combo: 5
             })
         }
+
+        await this.setState({
+            button: this.state.pattern[this.state.isNow]
+        })
     }
 
     snare2 = async () => {
@@ -73,7 +121,8 @@ class Main extends Component {
         if (this.state.pattern[this.state.isNow] === this.state.button) {
             if (this.state.pattern.length === this.state.isNow + 1) {
                 await this.setState({
-                    combo: this.state.combo - 1
+                    combo: this.state.combo - 1,
+                    isNow: 0
                 })
             }
 
@@ -89,44 +138,9 @@ class Main extends Component {
                 combo: 5
             })
         }
-    }
-
-    kick1 = async () => {
-        const requireAudio = require('../../assets/sounds/Kick(2).wav');
-        const s = new Sound(requireAudio, (e) => {
-            if (e) {
-                console.log('Error in SOUND', e);
-                return;
-            }
-            s.play(() => {
-                s.release()
-                s.setVolume(1.0)
-            });
-        });
-
         await this.setState({
-            button: 1
+            button: this.state.pattern[this.state.isNow]
         })
-
-        if (this.state.pattern[this.state.isNow] === this.state.button) {
-            if (this.state.pattern.length === this.state.isNow + 1) {
-                await this.setState({
-                    combo: this.state.combo - 1
-                })
-            }
-
-            await this.setState({
-                score: this.state.score + 2,
-                isNow: this.state.isNow + 1
-            })
-        } else {
-            await this.setState({
-                score: 0,
-                hasil: 0,
-                isNow: 0,
-                combo: 5
-            })
-        }
     }
 
     kick2 = async () => {
@@ -149,7 +163,8 @@ class Main extends Component {
         if (this.state.pattern[this.state.isNow] === this.state.button) {
             if (this.state.pattern.length === this.state.isNow + 1) {
                 await this.setState({
-                    combo: this.state.combo - 1
+                    combo: this.state.combo - 1,
+                    isNow: 0
                 })
             }
 
@@ -165,6 +180,9 @@ class Main extends Component {
                 combo: 5
             })
         }
+        await this.setState({
+            button: this.state.pattern[this.state.isNow]
+        })
     }
     render() {
         return (
@@ -179,13 +197,37 @@ class Main extends Component {
                     <View style={{ top: '5%' }}>
                         <View
                             style={{ flexDirection: 'row', justifyContent: 'space-around', marginHorizontal: 50 }}>
-                            <SmallDrum sound={this.snare1.bind(this)} />
-                            <SmallDrum sound={this.snare2.bind(this)} />
+                            {
+                                this.state.button == 2
+                                    ?
+                                    <SmallDrum sound={this.snare1.bind(this)} backgroundColor={'blue'} />
+                                    :
+                                    <SmallDrum sound={this.snare1.bind(this)} />
+                            }
+                            {
+                                this.state.button == 3
+                                    ?
+                                    <SmallDrum sound={this.snare2.bind(this)} backgroundColor={'blue'} />
+                                    :
+                                    <SmallDrum sound={this.snare2.bind(this)} />
+                            }
                         </View>
                         <View
                             style={{ flexDirection: 'row', justifyContent: 'space-evenly', bottom: '15%' }}>
-                            <BigDrum sound={this.kick1.bind(this)} />
-                            <BigDrum sound={this.kick2.bind(this)} />
+                            {
+                                this.state.button == 1
+                                    ?
+                                    <BigDrum sound={this.kick1.bind(this)} backgroundColor={'blue'} />
+                                    :
+                                    <BigDrum sound={this.kick1.bind(this)} />
+                            }
+                            {
+                                this.state.button == 4
+                                    ?
+                                    <BigDrum sound={this.kick2.bind(this)} backgroundColor={'blue'} />
+                                    :
+                                    <BigDrum sound={this.kick2.bind(this)} />
+                            }
                         </View>
                     </View>
                 </View>
@@ -204,7 +246,7 @@ class BigDrum extends Component {
                 style={styles.bigDrum}
                 onPress={this.props.sound}
             >
-                <View style={styles.bigDrumOutter}>
+                <View style={[styles.bigDrumOutter, { backgroundColor: this.props.backgroundColor || '#EECECE' }]}>
                     <View style={styles.bigDrumInner} />
                 </View>
             </TouchableOpacity>
@@ -220,7 +262,7 @@ class SmallDrum extends Component {
                 style={styles.smallDrum}
                 onPress={this.props.sound}
             >
-                <View style={styles.smallDrumOutter}>
+                <View style={[styles.smallDrumOutter, { backgroundColor: this.props.backgroundColor || '#F7F7F7' }]}>
                     <View style={styles.smallDrumInner} />
                 </View>
             </TouchableOpacity>
