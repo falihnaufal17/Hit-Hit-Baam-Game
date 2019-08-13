@@ -60,6 +60,26 @@ export default user = (state = initialState, action) => {
                 isFulFilled: true,
                 userList: action.payload.data.result
             }
+        case 'REGISTER_USER_PENDING':
+            return {
+                ...state,
+                isLoading: true,
+                isRejected: false,
+                isFulFilled: false
+            }
+        case 'REGISTER_USER_REJECTED':
+            return {
+                ...state,
+                isLoading: false,
+                isRejected: true
+            }
+        case 'REGISTER_USER_FULFILLED':
+            return {
+                ...state,
+                isLoading: false,
+                isFulFilled: true,
+                userList: [state.userList, action.payload.data[0]]
+            }
         default:
             return state
     }

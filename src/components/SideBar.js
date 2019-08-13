@@ -116,7 +116,7 @@ class SideBar extends Component {
                             </TouchableOpacity>
                             :
                             <TouchableOpacity
-                                onPress={() => this.props.navigation.navigate('Login')}>
+                                onPress={() => this.props.navigation.navigate('Auth')}>
                                 <Text style={styles.drawer}>
                                     <Icon name="sign-in" type="FontAwesome" style={[styles.signInColor, styles.icon]} /> Sign In
                         </Text>
