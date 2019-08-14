@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Image, Text, View, TouchableOpacity, Alert } from 'react-native'
 import Sound from 'react-native-sound'
 
 class Main extends Component {
@@ -8,17 +8,17 @@ class Main extends Component {
 
         this.state = {
             hasil: 0,
-            button: 0,
+            button: 3,
             isNow: 0,
             pattern: [3, 3, 3, 1, 2, 3, 4],
-            combo: 5,
-            score: 0
+            combo: 0,
+            score: 0,
+            timer: null
         }
     }
 
     kick1 = async () => {
-        const requireAudio = require('../../assets/sounds/Kick(2).wav');
-        const s = new Sound(requireAudio, (e) => {
+        const s = new Sound('kick2.wav', Sound.MAIN_BUNDLE, (e) => {
             if (e) {
                 console.log('Error in SOUND', e);
                 return;
@@ -36,7 +36,7 @@ class Main extends Component {
         if (this.state.pattern[this.state.isNow] === this.state.button) {
             if (this.state.pattern.length === this.state.isNow + 1) {
                 await this.setState({
-                    combo: this.state.combo - 1,
+                    combo: this.state.combo + 1,
                     isNow: 0
                 })
             }
@@ -46,16 +46,41 @@ class Main extends Component {
                 isNow: this.state.isNow + 1
             })
         } else {
+            Alert.alert(
+                'Yahh kalah ;(',
+                `Skormu: ${this.state.score}`,
+                [
+                    { text: 'Coba lagi' },
+                    { text: 'Keluar', onPress: () => this.props.navigation.goBack() }
+                ]
+            )
             await this.setState({
                 score: 0,
                 hasil: 0,
                 isNow: 0,
-                combo: 5
+                combo: 0
             })
         }
 
         await this.setState({
             button: this.state.pattern[this.state.isNow]
+        })
+
+        if (this.state.timer) {
+            clearTimeout(this.state.timer); //cancel the previous timer.
+            this.setState({
+                timer: null
+            })
+        }
+
+        this.setState({
+            timer: setTimeout(() => {
+                this.setState({
+                    combo: 0,
+                    score: 0,
+                })
+                alert("reset");
+            }, 4000)
         })
     }
 
@@ -63,9 +88,7 @@ class Main extends Component {
         await this.setState({
             button: 2
         })
-
-        const requireAudio = require('../../assets/sounds/Snare(8).wav');
-        const s = new Sound(requireAudio, (e) => {
+        const s = new Sound('snare8.wav', Sound.MAIN_BUNDLE, (e) => {
             if (e) {
                 console.log('Error in SOUND', e);
                 return;
@@ -79,7 +102,7 @@ class Main extends Component {
         if (this.state.pattern[this.state.isNow] === this.state.button) {
             if (this.state.pattern.length === this.state.isNow + 1) {
                 await this.setState({
-                    combo: this.state.combo - 1,
+                    combo: this.state.combo + 1,
                     isNow: 0
                 })
             }
@@ -89,22 +112,45 @@ class Main extends Component {
                 isNow: this.state.isNow + 1
             })
         } else {
+            Alert.alert(
+                'Yahh kalah ;(',
+                `Skormu: ${this.state.score}`,
+                [
+                    { text: 'Coba lagi' },
+                    { text: 'Keluar', onPress: () => this.props.navigation.goBack() }
+                ]
+            )
             await this.setState({
                 score: 0,
                 hasil: 0,
                 isNow: 0,
-                combo: 5
+                combo: 0
             })
         }
 
         await this.setState({
             button: this.state.pattern[this.state.isNow]
         })
+        if (this.state.timer) {
+            clearTimeout(this.state.timer); //cancel the previous timer.
+            this.setState({
+                timer: null
+            })
+        }
+
+        this.setState({
+            timer: setTimeout(() => {
+                this.setState({
+                    combo: 0,
+                    score: 0,
+                })
+                alert("reset");
+            }, 4000)
+        })
     }
 
     snare2 = async () => {
-        const requireAudio = require('../../assets/sounds/Snare(2).wav');
-        const s = new Sound(requireAudio, (e) => {
+        const s = new Sound('snare2.wav', Sound.MAIN_BUNDLE, (e) => {
             if (e) {
                 console.log('Error in SOUND', e);
                 return;
@@ -121,7 +167,7 @@ class Main extends Component {
         if (this.state.pattern[this.state.isNow] === this.state.button) {
             if (this.state.pattern.length === this.state.isNow + 1) {
                 await this.setState({
-                    combo: this.state.combo - 1,
+                    combo: this.state.combo + 1,
                     isNow: 0
                 })
             }
@@ -131,21 +177,45 @@ class Main extends Component {
                 isNow: this.state.isNow + 1
             })
         } else {
+            Alert.alert(
+                'Yahh kalah ;(',
+                `Skormu: ${this.state.score}`,
+                [
+                    { text: 'Coba lagi' },
+                    { text: 'Keluar', onPress: () => this.props.navigation.goBack() }
+                ]
+            )
             await this.setState({
                 score: 0,
                 hasil: 0,
                 isNow: 0,
-                combo: 5
+                combo: 0
             })
         }
         await this.setState({
             button: this.state.pattern[this.state.isNow]
         })
+
+        if (this.state.timer) {
+            clearTimeout(this.state.timer); //cancel the previous timer.
+            this.setState({
+                timer: null
+            })
+        }
+
+        this.setState({
+            timer: setTimeout(() => {
+                this.setState({
+                    combo: 0,
+                    score: 0,
+                })
+                alert("reset");
+            }, 4000)
+        })
     }
 
     kick2 = async () => {
-        const requireAudio = require('../../assets/sounds/Kick(2).wav');
-        const s = new Sound(requireAudio, (e) => {
+        const s = new Sound('kick2.wav', Sound.MAIN_BUNDLE, (e) => {
             if (e) {
                 console.log('Error in SOUND', e);
                 return;
@@ -163,7 +233,7 @@ class Main extends Component {
         if (this.state.pattern[this.state.isNow] === this.state.button) {
             if (this.state.pattern.length === this.state.isNow + 1) {
                 await this.setState({
-                    combo: this.state.combo - 1,
+                    combo: this.state.combo + 1,
                     isNow: 0
                 })
             }
@@ -173,15 +243,40 @@ class Main extends Component {
                 isNow: this.state.isNow + 1
             })
         } else {
+            Alert.alert(
+                'Yahh kalah ;(',
+                `Skormu: ${this.state.score}`,
+                [
+                    { text: 'Coba lagi' },
+                    { text: 'Keluar', onPress: () => this.props.navigation.goBack() }
+                ]
+            )
             await this.setState({
                 score: 0,
                 hasil: 0,
                 isNow: 0,
-                combo: 5
+                combo: 0
             })
         }
         await this.setState({
             button: this.state.pattern[this.state.isNow]
+        })
+
+        if (this.state.timer) {
+            clearTimeout(this.state.timer); //cancel the previous timer.
+            this.setState({
+                timer: null
+            })
+        }
+
+        this.setState({
+            timer: setTimeout(() => {
+                this.setState({
+                    combo: 0,
+                    score: 0,
+                })
+                alert("reset");
+            }, 4000)
         })
     }
     render() {
