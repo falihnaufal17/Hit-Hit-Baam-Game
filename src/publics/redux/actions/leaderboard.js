@@ -1,5 +1,5 @@
 import axios from 'axios'
-const api = 'http://192.168.100.70:9000'
+const api = 'https://api-hithitbaam.herokuapp.com'
 
 export const getLeaderBoard = () => {
     return {
