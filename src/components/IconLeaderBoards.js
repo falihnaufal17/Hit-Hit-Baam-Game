@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
 import { withNavigation } from 'react-navigation'
-import { View, Thumbnail, Icon } from 'native-base'
+import { View, Icon } from 'native-base'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class IconLeaderBoards extends Component {
