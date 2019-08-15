@@ -94,9 +94,8 @@ class SideBar extends Component {
                 }
 
                 <View style={styles.viewProfileData}>
-                    <Text style={[styles.profileData, styles.capitalize]}>{this.state.fullname}</Text>
-                    <Text style={styles.profileData}>{this.state.username}</Text>
-                    <Text style={styles.profileData}>Score: 521</Text>
+                    <Text style={[styles.profileData, styles.capitalize]}>{this.state.token ? this.state.fullname : 'player'}</Text>
+                    <Text style={styles.profileData}>{this.state.token ? this.state.username : 'player'}</Text>
                 </View>
 
                 <View style={styles.flhome}>

@@ -1,20 +1,116 @@
 import React, { Component } from 'react'
-import { StyleSheet, Image, Text, View, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, Image, Text, View, TouchableOpacity, Alert, AsyncStorage as storage } from 'react-native'
 import Sound from 'react-native-sound'
+
+import { connect } from 'react-redux'
+import { addScore, updateScore } from '../../publics/redux/actions/leaderboard'
 
 class Main extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
+            leaderboards: [],
             hasil: 0,
             button: 3,
             isNow: 0,
             pattern: [3, 3, 3, 1, 2, 3, 4],
             combo: 0,
             score: 0,
-            timer: null
+            timer: null,
+            id: '',
+            token: '',
+            data: this.props.navigation.getParam('data')
         }
+
+        storage.getItem('iduser', (error, result) => {
+            if (result) {
+                this.setState({
+                    id: result
+                })
+            }
+        })
+
+        storage.getItem('token', (error, result) => {
+            if (result) {
+                this.setState({
+                    token: result
+                })
+            }
+        })
+
+    }
+
+    add = () => {
+        if (this.state.data === undefined) {
+            console.log('TOKEN: ', this.state.token)
+            if (this.state.token === null || this.state.token === '') {
+                Alert.alert(
+                    'Kamu belum login!',
+                    `tidak dapat menyimpan skor :( ${this.state.score}`,
+                    [
+                        { text: 'Login Sekarang', onPress: () => this.props.navigation.navigate('Auth') },
+                        { text: 'Cancel', onPress: () => this.props.navigation.goBack() }
+                    ]
+                )
+                this.setState({
+                    score: 0,
+                    hasil: 0,
+                    isNow: 0,
+                    combo: 0
+                })
+            } else {
+                console.log("id USER: ", this.state.id)
+                console.log("TOKEN: ", this.state.token)
+                const data = {
+                    iduser: Number(this.state.id),
+                    skor: this.state.score
+                }
+                this.props.dispatch(addScore(data))
+                    .then(() => {
+                        this.setState({
+                            score: 0,
+                            hasil: 0,
+                            isNow: 0,
+                            combo: 0
+                        })
+                        this.props.navigation.navigate('App')
+                    })
+            }
+        } else {
+            console.log(this.state.data.skor)
+            console.log(this.state.score)
+            if (this.state.score > this.state.data.skor) {
+                console.log(this.state.data.skor)
+
+                const data = {
+                    iduser: Number(this.state.id),
+                    skor: this.state.score
+                }
+
+                this.props.dispatch(updateScore(Number(this.state.id), data))
+                    .then(() => {
+                        this.setState({
+                            score: 0,
+                            hasil: 0,
+                            isNow: 0,
+                            combo: 0
+                        })
+
+                        this.props.navigation.navigate('App')
+                    })
+            } else {
+                this.setState({
+                    score: 0,
+                    hasil: 0,
+                    isNow: 0,
+                    combo: 0
+                })
+
+                this.props.navigation.navigate('App')
+            }
+        }
+        this.props.navigation.navigate('App')
     }
 
     kick1 = async () => {
@@ -51,15 +147,9 @@ class Main extends Component {
                 `Skormu: ${this.state.score}`,
                 [
                     { text: 'Coba lagi' },
-                    { text: 'Keluar', onPress: () => this.props.navigation.goBack() }
+                    { text: 'Keluar', onPress: () => this.add() }
                 ]
             )
-            await this.setState({
-                score: 0,
-                hasil: 0,
-                isNow: 0,
-                combo: 0
-            })
         }
 
         await this.setState({
@@ -75,11 +165,14 @@ class Main extends Component {
 
         this.setState({
             timer: setTimeout(() => {
-                this.setState({
-                    combo: 0,
-                    score: 0,
-                })
-                alert("reset");
+                Alert.alert(
+                    "Yahh waktu habis ;(",
+                    `Skormu: ${this.state.score}`,
+                    [
+                        { text: 'Coba lagi' },
+                        { text: 'Keluar', onPress: () => this.add() }
+                    ]
+                );
             }, 4000)
         })
     }
@@ -117,15 +210,9 @@ class Main extends Component {
                 `Skormu: ${this.state.score}`,
                 [
                     { text: 'Coba lagi' },
-                    { text: 'Keluar', onPress: () => this.props.navigation.goBack() }
+                    { text: 'Keluar', onPress: () => this.add() }
                 ]
             )
-            await this.setState({
-                score: 0,
-                hasil: 0,
-                isNow: 0,
-                combo: 0
-            })
         }
 
         await this.setState({
@@ -140,11 +227,14 @@ class Main extends Component {
 
         this.setState({
             timer: setTimeout(() => {
-                this.setState({
-                    combo: 0,
-                    score: 0,
-                })
-                alert("reset");
+                Alert.alert(
+                    "Yahh waktu habis ;(",
+                    `Skormu: ${this.state.score}`,
+                    [
+                        { text: 'Coba lagi' },
+                        { text: 'Keluar', onPress: () => this.add() }
+                    ]
+                );
             }, 4000)
         })
     }
@@ -182,15 +272,9 @@ class Main extends Component {
                 `Skormu: ${this.state.score}`,
                 [
                     { text: 'Coba lagi' },
-                    { text: 'Keluar', onPress: () => this.props.navigation.goBack() }
+                    { text: 'Keluar', onPress: () => this.add() }
                 ]
             )
-            await this.setState({
-                score: 0,
-                hasil: 0,
-                isNow: 0,
-                combo: 0
-            })
         }
         await this.setState({
             button: this.state.pattern[this.state.isNow]
@@ -205,11 +289,14 @@ class Main extends Component {
 
         this.setState({
             timer: setTimeout(() => {
-                this.setState({
-                    combo: 0,
-                    score: 0,
-                })
-                alert("reset");
+                Alert.alert(
+                    "Yahh waktu habis ;(",
+                    `Skormu: ${this.state.score}`,
+                    [
+                        { text: 'Coba lagi' },
+                        { text: 'Keluar', onPress: () => this.add() }
+                    ]
+                );
             }, 4000)
         })
     }
@@ -248,15 +335,9 @@ class Main extends Component {
                 `Skormu: ${this.state.score}`,
                 [
                     { text: 'Coba lagi' },
-                    { text: 'Keluar', onPress: () => this.props.navigation.goBack() }
+                    { text: 'Keluar', onPress: () => this.add() }
                 ]
             )
-            await this.setState({
-                score: 0,
-                hasil: 0,
-                isNow: 0,
-                combo: 0
-            })
         }
         await this.setState({
             button: this.state.pattern[this.state.isNow]
@@ -271,11 +352,14 @@ class Main extends Component {
 
         this.setState({
             timer: setTimeout(() => {
-                this.setState({
-                    combo: 0,
-                    score: 0,
-                })
-                alert("reset");
+                Alert.alert(
+                    "Yahh waktu habis ;(",
+                    `Skormu: ${this.state.score}`,
+                    [
+                        { text: 'Coba lagi' },
+                        { text: 'Keluar', onPress: () => this.add() }
+                    ]
+                );
             }, 4000)
         })
     }
@@ -444,4 +528,9 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Main
+const mapStateToProps = state => {
+    return {
+        leaderboards: state.leaderboard.leaderboardList
+    };
+};
+export default connect(mapStateToProps)(Main)
