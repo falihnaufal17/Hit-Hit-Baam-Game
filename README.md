@@ -1,4 +1,4 @@
-<h1 align="center">Libraryku App</h1>
+<h1 align="center">Hit Hit Baam Game</h1>
 <p align="center">
   <img width="250" src="./src/assets/logo-hithitbaam/logo.png"/>
 </p>
