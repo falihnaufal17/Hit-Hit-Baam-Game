@@ -49,7 +49,7 @@ class Home extends Component {
                     <Text style={styles.txtScore}>
                         Score
                 </Text>
-                    <Text style={styles.txtNumber}>{this.state.token ? this.state.userData.skor : 0}</Text>
+                    <Text style={styles.txtNumber}>{this.state.token && this.state.userData !== undefined ? this.state.userData.skor : 0}</Text>
                     <TouchableOpacity
                         onPress={() => this.props.navigation.navigate('Main', {
                             data: this.state.userData
