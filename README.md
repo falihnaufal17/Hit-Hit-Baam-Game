@@ -41,9 +41,7 @@
 
 ## Screenshots
 <div align="center">
-    <img width="250" src="./src/assets/Screenshot_2019-08-30-18-25-39-694_com.hithitbaam.png">    
-    <img width="250" src="./src/assets/Screenshot_2019-08-30-18-26-22-586_com.hithitbaam.png">
-    <img width="250" src="./src/assets/Screenshot_2019-08-30-18-26-27-806_com.hithitbaam.png">
+    <img width="250" src="./src/assets/Screenshot_2019-08-30-18-25-39-694_com.hithitbaam.png">   
     <img width="250" src="./src/assets/Screenshot_2019-08-30-18-26-08-905_com.hithitbaam.png">
     <img width="250" src="./src/assets/Screenshot_2019-08-30-18-26-03-884_com.hithitbaam.png">
 </div>
@@ -61,7 +59,7 @@
   <table>
     <tr>
       <td align="center">
-        <a href="https://github.com/andreferi3">
+        <a href="https://github.com/falihnaufal17">
           <img width="100" src="./src/assets/IMG_20190526_225658_674.jpg" alt="Falih Naufal"><br/>
           <sub><b>Falih Naufal</b></sub>
         </a>
